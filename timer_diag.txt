@@ -1,0 +1,13 @@
+--- Text_MainTimer Diagnostics ---
+ActiveSelf: True, ActiveInHierarchy: True
+LocalPos: (-150.00, -72.00, 0.00), AnchoredPos: (-150.00, -72.00), SizeDelta: (600.00, 200.00)
+AnchorMin: (0.50, 0.50), AnchorMax: (0.50, 0.50)
+Scale: (1.00, 1.00, 1.00)
+TextProp: '25:00', FontSize: 180, Color: RGBA(1.000, 1.000, 1.000, 1.000)
+Font: LegacyRuntime
+HorizontalOverflow: Wrap, VerticalOverflow: Truncate
+
+--- TimerBox Parent Diagnostics ---
+Active: True, Scale: (1.00, 1.00, 1.00)
+AnchoredPos: (0.00, -600.00), SizeDelta: (1000.00, 400.00)
+AnchorMin: (0.50, 0.50), AnchorMax: (0.50, 0.50)

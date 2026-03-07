@@ -1,0 +1,15 @@
+{
+  "Success": false,
+  "ErrorCount": 1,
+  "WarningCount": 0,
+  "Errors": [
+    {
+      "Message": "Assets\\Editor\\RestoreMVPFeatures.cs(171,84): error CS1061: 'MagicButtonWrapper' does not contain a definition for 'ResearchCurrentRecipe' and no accessible extension method 'ResearchCurrentRecipe' accepting a first argument of type 'MagicButtonWrapper' could be found (are you missing a using directive or an assembly reference?)",
+      "File": "Assets\\Editor\\RestoreMVPFeatures.cs",
+      "Line": 171
+    }
+  ],
+  "Warnings": [],
+  "Message": null,
+  "Ver": "0.69.6"
+}

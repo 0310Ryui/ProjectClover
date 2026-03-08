@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed26ce0139dbc447ad16070654b82ed, type: 3}
   m_Name: Thread
   m_EditorClassIdentifier: 
-  materialId: mat_thread
+  materialId: MAT_THREAD
   materialName: Thread
   icon: {fileID: 0}
   rarity: 1

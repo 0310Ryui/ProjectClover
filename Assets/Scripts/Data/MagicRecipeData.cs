@@ -15,4 +15,5 @@ public class MagicRecipeData : ScriptableObject
     public List<MaterialRequirement> requiredMaterials;
     public int requiredMoney;
     public int researchTimeSeconds;
+    public bool isConsumable; // For testing or repeated items
 }

@@ -65,9 +65,17 @@ public class RewardManager : MonoBehaviour {
             moneyText.text = $"{inventory.money} G";
         }
         if (materialText != null) {
-            int totalItems = 0;
-            foreach (var count in inventory.materialCounts) totalItems += count;
-            materialText.text = $"Items: {totalItems}";
+            string matInfo = "";
+            for (int i = 0; i < inventory.materialIds.Count; i++) {
+                string id = inventory.materialIds[i];
+                int count = inventory.materialCounts[i];
+                // Simplify display for MVP: MAT_THREAD -> Thread
+                string displayName = id.Replace("MAT_", "").ToLower();
+                displayName = char.ToUpper(displayName[0]) + displayName.Substring(1);
+                matInfo += $"{displayName}: {count}\n";
+            }
+            if (string.IsNullOrEmpty(matInfo)) matInfo = "Items: 0";
+            materialText.text = matInfo.TrimEnd();
         }
     }
 }

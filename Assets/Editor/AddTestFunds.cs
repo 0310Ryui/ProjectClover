@@ -10,8 +10,8 @@ public class AddTestFunds {
         }
 
         var inventory = SaveManager.Current.player.inventory;
-        inventory.money += 1000;
-        inventory.AddMaterial("MAT_THREAD", 20);
+        inventory.money += 5000;
+        inventory.AddMaterial("MAT_THREAD", 50);
         SaveManager.Save();
 
         var mainManagerGo = GameObject.Find("MainManager");
@@ -22,6 +22,6 @@ public class AddTestFunds {
             }
         }
 
-        Debug.Log("Added 1000 G and 20 Thread for testing!");
+        Debug.Log("Added 5000 G and 50 Thread for testing!");
     }
 }

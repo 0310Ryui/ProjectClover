@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b63104211440774bba9695ad4e479a7, type: 3}
   m_Name: NewMagicRecipe
   m_EditorClassIdentifier: 
-  recipeId: 
-  recipeName: 
-  requiredMaterials: []
-  requiredMoney: 0
+  recipeId: BGM_01
+  recipeName: Unlock BGM 1
+  requiredMaterials:
+  - material: {fileID: 11400000, guid: 785c9af089bf66a40bfc80b88a4eace0, type: 2}
+    amount: 5
+  requiredMoney: 300
   researchTimeSeconds: 0
+  isConsumable: 1

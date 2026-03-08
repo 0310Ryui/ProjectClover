@@ -1832,10 +1832,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rewardManager: {fileID: 808115424}
+  dollManager: {fileID: 0}
   recipeListContainer: {fileID: 0}
   recipeUIPrefab: {fileID: 0}
   allRecipes:
   - {fileID: 11400000, guid: 7ed8e4c1b952b9e41bee8b78917ec86e, type: 2}
+  - {fileID: 11400000, guid: 105478ed7e76aba438c1215a0c574436, type: 2}
+  - {fileID: 11400000, guid: 774b4269e8d232e4ab1cd14cfd6636e1, type: 2}
 --- !u!114 &808115424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2109,7 +2112,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 400, y: 828}
+  m_AnchoredPosition: {x: -415, y: 828}
   m_SizeDelta: {x: 140, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &856104041
@@ -3811,7 +3814,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -20, y: -150}
+  m_AnchoredPosition: {x: -20, y: -36}
   m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1417441481
@@ -4309,7 +4312,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\U0001F4B0 0 G"
+  m_Text: 1000 G
 --- !u!222 &1512099741
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5230,7 +5233,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\U0001F392 Items: 0"
+  m_Text: 'Thread: 12'
 --- !u!222 &1985864452
 CanvasRenderer:
   m_ObjectHideFlags: 0

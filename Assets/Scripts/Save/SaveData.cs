@@ -5,7 +5,7 @@ public class InventorySaveData {
     public int money;
     public List<string> materialIds = new List<string>();
     public List<int> materialCounts = new List<int>();
-    
+
     public void AddMaterial(string id, int amount) {
         int index = materialIds.IndexOf(id);
         if (index >= 0) {
@@ -50,11 +50,17 @@ public class TaskCategory {
 }
 
 [System.Serializable]
+public class AudioSettingsSaveData {
+    public bool initialized;
+    public float seVolume = 0.5f;
+    public float bgmVolume = 0.5f;
+}
+
+[System.Serializable]
 public class PlayerSaveData {
     public InventorySaveData inventory = new InventorySaveData();
     public List<string> unlockedMagics = new List<string>();
-    
-    // Hierarchical Tasks
+    public AudioSettingsSaveData audioSettings = new AudioSettingsSaveData();
     public List<TaskCategory> taskCategories = new List<TaskCategory>();
     public string selectedCategoryId;
     public string selectedTaskId;

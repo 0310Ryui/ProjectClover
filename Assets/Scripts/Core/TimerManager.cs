@@ -1,6 +1,6 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 
 public enum TimerState {
     Idle,
@@ -14,25 +14,26 @@ public class TimerManager : MonoBehaviour {
 
     [Header("UI References")]
     public Text mainTimerText;
-    public Text timerStatusText; // Shows "Focusing" etc.
+    public Text timerStatusText;
     public Text workSettingsText;
     public Text breakSettingsText;
-    
+
     [Header("External References")]
     public UIManager uiManager;
 
     [Header("Settings - Minutes")]
     public int workDurationMinutes = 25;
     public int breakDurationMinutes = 5;
-    
+
     public TimerState CurrentState { get; private set; } = TimerState.Idle;
     public float RemainingSeconds { get; private set; }
     public bool isPaused { get; private set; }
-    
+
     private DateTime _lastTimeTracker;
+    private DollManager _dollManager;
 
     private void Start() {
-        // Button listeners will be wired via script or inspector
+        _dollManager = FindFirstObjectByType<DollManager>();
         UpdateUI();
     }
 
@@ -54,18 +55,21 @@ public class TimerManager : MonoBehaviour {
         if (CurrentState == TimerState.Idle) {
             CurrentState = TimerState.Work;
             StartTimer(workDurationMinutes * 60f);
+            ShowDollSpeech(DollSpeechState.WorkStart);
             if (uiManager != null) uiManager.HideTimerSettings();
         } else if (CurrentState == TimerState.WaitingForBreak) {
             CurrentState = TimerState.Break;
             StartTimer(breakDurationMinutes * 60f);
+            ShowDollSpeech(DollSpeechState.Break);
             if (uiManager != null) uiManager.HideTimerSettings();
         }
     }
 
     public void StopCurrentTimer() {
         CurrentState = TimerState.Idle;
-        RemainingSeconds = 0;
+        RemainingSeconds = 0f;
         isPaused = false;
+        SaveManager.Save();
         UpdateUI();
     }
 
@@ -73,9 +77,9 @@ public class TimerManager : MonoBehaviour {
         if (CurrentState == TimerState.Work || CurrentState == TimerState.Break) {
             isPaused = !isPaused;
             if (!isPaused) {
-                // unpaused, reset tracker so it doesn't jump
                 _lastTimeTracker = DateTime.Now;
             }
+
             UpdateUI();
         }
     }
@@ -93,7 +97,6 @@ public class TimerManager : MonoBehaviour {
         float delta = Time.unscaledDeltaTime;
         RemainingSeconds -= delta;
 
-        // Track time for the selected task
         if (CurrentState == TimerState.Work) {
             var player = SaveManager.Current.player;
             if (!string.IsNullOrEmpty(player.selectedTaskId) && !string.IsNullOrEmpty(player.selectedCategoryId)) {
@@ -105,26 +108,28 @@ public class TimerManager : MonoBehaviour {
             }
         }
 
-        if (RemainingSeconds <= 0) {
+        if (RemainingSeconds <= 0f) {
             OnTimerCompleted();
         }
+
         UpdateUI();
     }
 
     private void OnTimerCompleted() {
-        RemainingSeconds = 0;
-        
+        RemainingSeconds = 0f;
+
         if (CurrentState == TimerState.Work) {
             CurrentState = TimerState.WaitingForBreak;
             onTimerCompleted?.Invoke(TimerState.Work);
+            ShowDollSpeech(DollSpeechState.Break);
             Debug.Log("Work completed. Waiting for break...");
         } else if (CurrentState == TimerState.Break) {
             CurrentState = TimerState.Idle;
             onTimerCompleted?.Invoke(TimerState.Break);
+            ShowDollSpeech(DollSpeechState.DayEnd);
             Debug.Log("Break completed.");
         }
 
-        // 完了時にタスクの累計時間を保存
         SaveManager.Save();
         UpdateUI();
     }
@@ -135,7 +140,7 @@ public class TimerManager : MonoBehaviour {
             RemainingSeconds -= (float)elapsed.TotalSeconds;
             _lastTimeTracker = DateTime.Now;
 
-            if (RemainingSeconds <= 0) {
+            if (RemainingSeconds <= 0f) {
                 OnTimerCompleted();
             }
         } else if (isAppPaused) {
@@ -149,12 +154,12 @@ public class TimerManager : MonoBehaviour {
 
         if (mainTimerText != null) {
             if (CurrentState == TimerState.Idle) {
-                mainTimerText.text = $"{workDurationMinutes:00}:00"; 
+                mainTimerText.text = $"{workDurationMinutes:00}:00";
             } else if (CurrentState == TimerState.WaitingForBreak) {
                 mainTimerText.text = $"{breakDurationMinutes:00}:00";
             } else {
-                int min = Mathf.FloorToInt(Mathf.Max(0, RemainingSeconds) / 60);
-                int sec = Mathf.FloorToInt(Mathf.Max(0, RemainingSeconds) % 60);
+                int min = Mathf.FloorToInt(Mathf.Max(0f, RemainingSeconds) / 60f);
+                int sec = Mathf.FloorToInt(Mathf.Max(0f, RemainingSeconds) % 60f);
                 mainTimerText.text = $"{min:00}:{sec:00}";
             }
         }
@@ -166,6 +171,16 @@ public class TimerManager : MonoBehaviour {
                 case TimerState.WaitingForBreak: timerStatusText.text = "Waiting for Break"; break;
                 case TimerState.Break: timerStatusText.text = "Resting"; break;
             }
+        }
+    }
+
+    private void ShowDollSpeech(DollSpeechState state) {
+        if (_dollManager == null) {
+            _dollManager = FindFirstObjectByType<DollManager>();
+        }
+
+        if (_dollManager != null) {
+            _dollManager.ShowStateMessage(state);
         }
     }
 }

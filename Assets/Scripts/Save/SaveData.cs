@@ -23,9 +23,41 @@ public class InventorySaveData {
 }
 
 [System.Serializable]
+public class TaskItem {
+    public string taskId;
+    public string taskName;
+    public bool isCompleted;
+    public float timeSpentSeconds;
+
+    public TaskItem(string name) {
+        taskId = System.Guid.NewGuid().ToString();
+        taskName = name;
+        isCompleted = false;
+        timeSpentSeconds = 0;
+    }
+}
+
+[System.Serializable]
+public class TaskCategory {
+    public string categoryId;
+    public string categoryName;
+    public List<TaskItem> tasks = new List<TaskItem>();
+
+    public TaskCategory(string name) {
+        categoryId = System.Guid.NewGuid().ToString();
+        categoryName = name;
+    }
+}
+
+[System.Serializable]
 public class PlayerSaveData {
     public InventorySaveData inventory = new InventorySaveData();
     public List<string> unlockedMagics = new List<string>();
+    
+    // Hierarchical Tasks
+    public List<TaskCategory> taskCategories = new List<TaskCategory>();
+    public string selectedCategoryId;
+    public string selectedTaskId;
 }
 
 [System.Serializable]

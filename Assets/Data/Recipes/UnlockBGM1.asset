@@ -17,5 +17,6 @@ MonoBehaviour:
   requiredMaterials:
   - material: {fileID: 11400000, guid: 785c9af089bf66a40bfc80b88a4eace0, type: 2}
     amount: 2
-  requiredMoney: 500
+  requiredMoney: 150
   researchTimeSeconds: 0
+  isConsumable: 0

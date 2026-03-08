@@ -90,7 +90,20 @@ public class TimerManager : MonoBehaviour {
     private void Update() {
         if (CurrentState == TimerState.Idle || CurrentState == TimerState.WaitingForBreak || isPaused) return;
 
-        RemainingSeconds -= Time.unscaledDeltaTime;
+        float delta = Time.unscaledDeltaTime;
+        RemainingSeconds -= delta;
+
+        // Track time for the selected task
+        if (CurrentState == TimerState.Work) {
+            var player = SaveManager.Current.player;
+            if (!string.IsNullOrEmpty(player.selectedTaskId) && !string.IsNullOrEmpty(player.selectedCategoryId)) {
+                var category = player.taskCategories.Find(c => c.categoryId == player.selectedCategoryId);
+                var task = category?.tasks.Find(t => t.taskId == player.selectedTaskId);
+                if (task != null) {
+                    task.timeSpentSeconds += delta;
+                }
+            }
+        }
 
         if (RemainingSeconds <= 0) {
             OnTimerCompleted();
@@ -110,6 +123,9 @@ public class TimerManager : MonoBehaviour {
             onTimerCompleted?.Invoke(TimerState.Break);
             Debug.Log("Break completed.");
         }
+
+        // 完了時にタスクの累計時間を保存
+        SaveManager.Save();
         UpdateUI();
     }
 
